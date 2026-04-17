@@ -10,7 +10,7 @@ app.secret_key="arnab"
 
 mycon = get_db()
 mycursor = mycon.cursor()
-mycursor.execute("create TABLE IF NOT EXISTS users(id SERIAL primary key,name varchar(100),email varchar(100) unique,password varchar(255),joiningdate date)")
+mycursor.execute("create TABLE IF NOT EXISTS usersone(id SERIAL primary key,name varchar(100),email varchar(100) unique,password varchar(255),joiningdate date)")
 mycon.commit()
 @app.route("/")
 @app.route("/login.html")
@@ -30,12 +30,12 @@ def signup():
     tarik=date.today()
     mycon = get_db()
     mycursor = mycon.cursor()
-    mycursor.execute("select * from users where email='{em}' and password='{pa}'".format(em=email,pa=password));
+    mycursor.execute("select * from usersone where email='{em}' and password='{pa}'".format(em=email,pa=password));
     a=mycursor.fetchone()
     if a:
         return redirect("/login.html?noti=exists")
     else:
-        mycursor.execute("insert into users(name,email,password,joiningdate) values('{na}','{em}','{pas}','{jd}')".format(na=name,em=email,pas=password,jd=tarik))
+        mycursor.execute("insert into usersone(name,email,password,joiningdate) values('{na}','{em}','{pas}','{jd}')".format(na=name,em=email,pas=password,jd=tarik))
         mycon.commit()
 
         return render_template("/login.html")
@@ -54,7 +54,7 @@ def login():
       password=request.form["password"]
       mycon = get_db()
       mycursor = mycon.cursor()
-      mycursor.execute("select * from users where email='{em}' and password='{pa}'".format(em=email,pa=password));
+      mycursor.execute("select * from usersone where email='{em}' and password='{pa}'".format(em=email,pa=password));
       a=mycursor.fetchone()
 
 
@@ -87,7 +87,7 @@ def profile():
     
 
     mycursor.execute(
-        "SELECT email, joiningdate FROM users WHERE name=%s",
+        "SELECT email, joiningdate FROM usersone WHERE name=%s",
         (session["username"],)
     )
 
