@@ -219,7 +219,11 @@ document.addEventListener("DOMContentLoaded", function(){
     
     else if(noti==="devpls"){
         notification("wrong password!");
-        window.history.replaceState({}, document.title, window.location.pathname);}    
+        window.history.replaceState({}, document.title, window.location.pathname);}
+
+    else if(noti==="checkemail"){
+        notification("Devloper password has been send !important for Calibration");
+        window.history.replaceState({}, document.title, window.location.pathname);}
 });
 
 
