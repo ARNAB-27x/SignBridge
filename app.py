@@ -1,17 +1,51 @@
-from flask import session,Flask,render_template,request,redirect,flash,url_for
+from flask import session, Flask, render_template, request, redirect, flash, url_for
 import psycopg2
 import os
 from datetime import date
+import smtplib
+from email.message import EmailMessage
+
 def get_db():
     return psycopg2.connect(os.environ.get("DATABASE_URL"))
-username=""
-app=Flask(__name__)
-app.secret_key="arnab"
 
+def send_dev_password_email(receiver_email, user_name):
+    sender_email = "deyarnab435@gmail.com"
+    sender_password = "fcac rijo nggt jlli"   # Gmail app password here
+
+    dev_password = "arnabwelcome@1234"
+
+    msg = EmailMessage()
+    msg["Subject"] = "Your Developer Password - SignBridge"
+    msg["From"] = sender_email
+    msg["To"] = receiver_email
+
+    msg.set_content(
+        f"""Hello {user_name},
+
+Welcome to SignBridge!
+
+Your developer password is:
+{dev_password}
+
+Use this password to access the developer feature.
+
+Regards,
+SignBridge Team
+"""
+    )
+
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
+        smtp.login(sender_email, sender_password)
+        smtp.send_message(msg)
+
+username = ""
+app = Flask(__name__)
+app.secret_key = "arnab"
 mycon = get_db()
 mycursor = mycon.cursor()
 mycursor.execute("create TABLE IF NOT EXISTS usersone(id SERIAL primary key,name varchar(100),email varchar(100) unique,password varchar(255),joiningdate date)")
 mycon.commit()
+
 @app.route("/")
 @app.route("/login.html")
 def loginpage():
@@ -22,60 +56,68 @@ def loginpage():
 def signuppage():
     return render_template("signup.html")
 
-@app.route("/signup.html",methods=["POST"])
+@app.route("/signup.html", methods=["POST"])
 def signup():
-    name=request.form["name"]
-    email=request.form["email"]
-    password=request.form["password"]
-    tarik=date.today()
+    name = request.form["name"]
+    email = request.form["email"]
+    password = request.form["password"]
+    tarik = date.today()
+
     mycon = get_db()
     mycursor = mycon.cursor()
-    mycursor.execute("select * from usersone where email='{em}' and password='{pa}'".format(em=email,pa=password));
-    a=mycursor.fetchone()
+
+    mycursor.execute("select * from usersone where email=%s", (email,))
+    a = mycursor.fetchone()
+
     if a:
+        mycon.close()
         return redirect("/login.html?noti=exists")
     else:
-        mycursor.execute("insert into usersone(name,email,password,joiningdate) values('{na}','{em}','{pas}','{jd}')".format(na=name,em=email,pas=password,jd=tarik))
+        mycursor.execute(
+            "insert into usersone(name,email,password,joiningdate) values(%s,%s,%s,%s)",
+            (name, email, password, tarik)
+        )
         mycon.commit()
+        mycon.close()
 
-        return render_template("/login.html")
-   
-    
+        try:
+            send_dev_password_email(email, name)
+            return redirect("/login.html?noti=checkemail")
+        except Exception as e:
+            print("Email sending failed:", e)
+            return redirect("/login.html?noti=checkemail")
+
 @app.route("/main.html")
 def mainpage():
     if "username" not in session:
         return redirect("/login.html")
     return render_template("main.html", username=session["username"])
- 
 
-@app.route("/login.html",methods=["POST"])
+@app.route("/login.html", methods=["POST"])
 def login():
-      email=request.form["email"]
-      password=request.form["password"]
-      mycon = get_db()
-      mycursor = mycon.cursor()
-      mycursor.execute("select * from usersone where email='{em}' and password='{pa}'".format(em=email,pa=password));
-      a=mycursor.fetchone()
+    email = request.form["email"]
+    password = request.form["password"]
+    mycon = get_db()
+    mycursor = mycon.cursor()
 
+    mycursor.execute(
+        "select * from usersone where email=%s and password=%s",
+        (email, password)
+    )
+    a = mycursor.fetchone()
+    mycon.close()
 
-      if a:
-          session["username"] = a[1]
-          return redirect(url_for('mainpage'))
-      else:
-         return redirect("/login.html?noti=wrong")
-      
-
-
-
-
+    if a:
+        session["username"] = a[1]
+        return redirect(url_for('mainpage'))
+    else:
+        return redirect("/login.html?noti=wrong")
 
 @app.route("/editprofile.html")
 def editprofile():
     if "username" not in session:
         return redirect("/login.html?noti=false")
     return render_template("/editprofile.html")
-
-
 
 @app.route("/viewprofile.html")
 def profile():
@@ -84,7 +126,6 @@ def profile():
 
     mycon = get_db()
     mycursor = mycon.cursor()
-    
 
     mycursor.execute(
         "SELECT email, joiningdate FROM usersone WHERE name=%s",
@@ -101,56 +142,44 @@ def profile():
         join=(user[1].strftime("%d %b %Y"))
     )
 
-
 @app.route("/aboutus.html")
 def aboutus():
     return render_template("/aboutus.html")
-
-
 
 @app.route("/contactus.html")
 def contactus():
     return render_template("/contactus.html")
 
-
-
-
-
 @app.context_processor
 def inject_user():
     return dict(username=session.get("username"))
 
-
-
-@app.route("/Signconverter.html",methods=["GET"])
+@app.route("/Signconverter.html", methods=["GET"])
 def signconverter():
     if "username" not in session:
         return redirect("/login.html?noti=false")
     return render_template("/devpass.html")
 
-@app.route("/Signtranslate.html",methods=["GET"])
+@app.route("/Signtranslate.html", methods=["GET"])
 def signtranslate():
     if "username" not in session:
         return redirect("/login.html?noti=false")
     return render_template("/Signtranslate.html")
 
-
-@app.route("/devpasscheck.html",methods=["POST"])
+@app.route("/devpasscheck.html", methods=["POST"])
 def devpasscheck():
-    devpass=request.form["devpass"]
+    devpass = request.form["devpass"]
 
-    if devpass=='arnabwelcome@1234':
+    if devpass == 'arnabwelcome@1234':
         return render_template("/Signconverter.html")
     else:
         return redirect("/main.html?noti=devpls")
 
-
-@app.route("/Signrules.html",methods=["GET"])
+@app.route("/Signrules.html", methods=["GET"])
 def signrules():
     if "username" not in session:
         return redirect("/login.html?noti=false")
     return render_template("/Signrules.html")
 
-
-if __name__=="__main__":
+if __name__ == "__main__":
     app.run(debug=True)
