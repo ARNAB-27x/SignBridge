@@ -1,17 +1,17 @@
 from flask import session,Flask,render_template,request,redirect,flash,url_for
-import mysql.connector as ms
+import psycopg2
+import os
 from datetime import date
 def get_db():
-    return ms.connect(
-        host="localhost",
-        user="root",
-        passwd="arnab",
-        database="sign"
-    )
+    return psycopg2.connect(os.environ.get("DATABASE_URL"))
 username=""
 app=Flask(__name__)
 app.secret_key="arnab"
 
+mycon = get_db()
+mycursor = mycon.cursor()
+mycursor.execute("create TABLE IF NOT EXISTS users(id SERIAL primary key,name varchar(100),email varchar(100) unique,password varchar(255),joiningdate date)")
+mycon.commit()
 @app.route("/")
 @app.route("/login.html")
 def loginpage():
