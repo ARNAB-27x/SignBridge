@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block content %}
+<header>
+        <div id="profile" class="relative h-15 bg-linear-to-r from-[#0f172a] via-[#1e293b] to-[#0f172a] flex items-center justify-between ">
+            <div class=" pl-50 flex items-center gap-3"><img class="h-15 w-15  flex items-center" src="/static/logo.png" alt="NESTA" >
+            <div class="h-12 w-20 font-bold text-xl text-white flex items-center">NESTA</div></div>
+            <div class=" w-100 flex items-center gap-5 "><button class="p-2 rounded-full hover:bg-gray-600 text-yellow-400  transition"><svg id="theme" xmlns="http://www.w3.org/2000/svg" 
+class="h-6 w-6 text-yellow-400 cursor-pointer "
+fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+
+  <circle cx="12" cy="12" r="5"></circle>
+
+  <line x1="12" y1="1" x2="12" y2="3"></line>
+  <line x1="12" y1="21" x2="12" y2="23"></line>
+
+  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+
+  <line x1="1" y1="12" x2="3" y2="12"></line>
+  <line x1="21" y1="12" x2="23" y2="12"></line>
+
+  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+
+</svg></button>
+<div id="isprofile" class="absolute right-10 h-10 w-10 rounded-full cursor-pointer overflow-hidden">
+    <canvas id="avatarCanvas" width="40" height="40"></canvas>
+</div>
+
+            </div>
+            
+        </div>
+    </header>
+    <main id="main" class="h-180 flex items-center justify-center bg-[url('/static/images/pexels-codioful-7130536.jpg')] bg-cover ">
+        <div></div>
+        <div></div>
+        <div></div>
+
+<div class="min-h-screen flex flex-col justify-center items-center">
+
+    <div class="h-150 w-200  rounded-2xl shadow-xl  bg-gray-800 border border-gray-700">
+        <div class="h-60 w-200  rounded-t-lg"><img class="h-60 w-199 rounded-t-2xl object-cover" src="/static/banner.png" alt="BANNER" ></div>
+        <div class="relative bottom-25 left-10 h-50 w-50 rounded-full border-5 border-gray-600"><canvas id="canva" width="200" height="200" class="w-full h-full"></canvas></div>
+        <div class="h-10 w-50 relative bottom-20 left-15"><p class="text-3xl font-bold text-gray-100">{{username}}</p></div>
+        <div class="flex relative bottom-18 left-8 h-40 w-180  gap-3 items-center"><div class="flex h-20 w-100 items-start gap-4 p-4 rounded-xl transition bg-gray-700 hover:bg-gray-600 border border-gray-600"><div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail w-5 h-5 text-blue-600" aria-hidden="true"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg></div><div class="flex-1 min-w-0"><p class="text-sm font-medium mb-1 text-gray-300">Email Address</p><p class="font-medium truncate text-gray-100">{{ em }}</p></div></div>
+        <div class="flex w-100 h-20 items-start gap-4 p-4 rounded-xl transition bg-gray-700 hover:bg-gray-600 border border-gray-600"><div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar w-5 h-5 text-purple-600" aria-hidden="true"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg></div><div class="flex-1 min-w-0"><p class="text-sm font-medium mb-1 text-gray-300">Member Since</p><p class="font-medium text-gray-100">{{join}}</p></div></div></div>
+        
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+<script>
+let username = "{{ username }}";
+
+function getInitials(name) {
+    let words = name.trim().split(" ");
+    let initials = words[0][0];
+    if (words.length > 1) {
+        initials += words[1][0];
+    }
+    return initials.toUpperCase();
+}
+
+function getColor(name) {
+    let colors = ["#FF5733", "#33FF57", "#3357FF", "#FF33A8", "#FF8C00"];
+    let index = name.length % colors.length;
+    return colors[index];
+}
+
+function generateAvatar() {
+    let canvas = document.getElementById("avatarCanvas");
+    let canva = document.getElementById("canva");
+
+    let ctx = canvas.getContext("2d");
+    let ct = canva.getContext("2d");
+
+    let initials = getInitials(username);
+
+    
+    ctx.fillStyle = getColor(username);
+    ctx.beginPath();
+    ctx.arc(20, 20, 20, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = "white";
+    ctx.font = "bold 18px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(initials, 20, 22);
+
+    
+    let size = canva.width; 
+
+    ct.fillStyle = getColor(username);
+    ct.beginPath();
+    ct.arc(size/2, size/2, size/2, 0, Math.PI * 2);
+    ct.fill();
+
+    ct.fillStyle = "white";
+    ct.font = "bold " + (size/2.5) + "px Arial";
+    ct.textAlign = "center";
+    ct.textBaseline = "middle";
+    ct.fillText(initials, size/2, size/2);
+}
+
+generateAvatar();
+</script>
+{% endblock %}

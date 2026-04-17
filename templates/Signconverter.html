@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+
+{% block content %}
+<header>
+        <div id="profile" class="relative h-15 bg-linear-to-r from-[#0f172a] via-[#1e293b] to-[#0f172a] flex items-center justify-between ">
+            <div class=" pl-50 flex items-center gap-3"><img class="h-25 w-30  flex items-center" src="/static/logo.png" alt="SignBridge" >
+            <div class="h-12 w-20 font-bold text-xl text-white flex items-center">SignBridge</div></div>
+            <div class=" w-100 flex items-center gap-5 "><button class="p-2 rounded-full hover:bg-gray-600 text-yellow-400  transition"><svg id="theme" xmlns="http://www.w3.org/2000/svg" 
+class="h-6 w-6 text-yellow-400 cursor-pointer "
+fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+
+  <circle cx="12" cy="12" r="5"></circle>
+
+  <line x1="12" y1="1" x2="12" y2="3"></line>
+  <line x1="12" y1="21" x2="12" y2="23"></line>
+
+  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+
+  <line x1="1" y1="12" x2="3" y2="12"></line>
+  <line x1="21" y1="12" x2="23" y2="12"></line>
+
+  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+
+</svg></button>
+  <div id="isprofile" class="absolute right-10 h-10 w-10 rounded-full cursor-pointer overflow-hidden">
+    <canvas id="avatarCanvas" width="40" height="40"></canvas>
+</div>
+
+            </div>
+            
+        </div>
+    </header>
+    <main id="main" class=" flex items-center justify-center bg-[url('/static/images/pexels-codioful-7130536.jpg')] bg-cover ">
+        <div></div>
+        <div></div>
+        <div></div>
+<main id="main" class="min-h-screen flex items-center justify-center  py-10">
+    <div class="w-[1200px] max-w-full px-6">
+        <div class="relative right-85 flex items-center justify-center gap-5 mb-6">
+
+        <a href="/main.html"
+           class="group flex items-center justify-center h-12 w-12 rounded-md bg-white/20 backdrop-blur-md hover:bg-white/30 transition duration-200">
+            
+            <svg viewBox="0 0 24 24"
+                 class="h-6 w-6 text-white transition duration-200 group-hover:-translate-x-1">
+                
+                <line x1="19" y1="12" x2="5" y2="12"
+                      stroke="white" stroke-width="2" stroke-linecap="round"/>
+                
+                <polyline points="12 5 5 12 12 19"
+                          fill="none" stroke="white" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+
+        </a>
+
+        <div class="font-bold text-2xl text-white font-sans">
+            HELLO DEV! Now You Can Calibrate
+        </div>
+
+    </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+            
+            <div class="bg-gray-900/80 rounded-2xl p-6 shadow-2xl border border-gray-700">
+                <h1 class="text-3xl font-bold text-white mb-4">Live Sign Converter</h1>
+
+                <div id="camera-box" class="relative w-full max-w-[640px] h-[480px] mx-auto rounded-xl overflow-hidden border-2 border-white">
+                    <video id="webcam" autoplay playsinline class="absolute top-0 left-0 w-full h-full object-cover"></video>
+                    <canvas id="output_canvas" class="absolute top-0 left-0 w-full h-full pointer-events-none"></canvas>
+                </div>
+
+                <div class="mt-6 grid grid-cols-2 gap-4">
+                    <div class="bg-gray-800 rounded-xl p-4">
+                        <p class="text-gray-400 text-sm">Current prediction</p>
+                        <p id="predicted-letter" class="text-4xl font-bold text-emerald-400 mt-2">-</p>
+                    </div>
+
+                    <div class="bg-gray-800 rounded-xl p-4">
+                        <p class="text-gray-400 text-sm">Status</p>
+                        <p id="status-text" class="text-lg font-semibold text-white mt-2">Waiting...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-900/80 rounded-2xl p-6 shadow-2xl border border-gray-700">
+                <h2 class="text-2xl font-bold text-white mb-4">Build Word</h2>
+
+                <label class="text-gray-300 block mb-2">Recognized text</label>
+                <textarea id="word-output" rows="4" readonly
+                    class="w-full rounded-xl bg-gray-800 text-white p-4 border border-gray-600 resize-none"></textarea>
+
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <button id="space-btn" class="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700">Space</button>
+                    <button id="backspace-btn" class="px-4 py-2 rounded-lg bg-yellow-600 text-white hover:bg-yellow-700">Backspace</button>
+                    <button id="clear-btn" class="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700">Clear</button>
+                </div>
+
+                <hr class="my-6 border-gray-700">
+
+                <h2 class="text-2xl font-bold text-white mb-4">Calibrate Letters</h2>
+                <p class="text-gray-400 mb-3">
+                    Hold one sign clearly, choose the letter, then press capture a few times.
+                    This stores templates in your browser.
+                </p>
+
+                <div class="flex flex-wrap gap-3 items-center">
+                    <select id="letter-select" class="px-4 py-2 rounded-lg bg-gray-800 text-white border border-gray-600">
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                        <option value="F">F</option>
+                        <option value="G">G</option>
+                        <option value="H">H</option>
+                        <option value="I">I</option>
+                        <option value="K">K</option>
+                        <option value="L">L</option>
+                        <option value="M">M</option>
+                        <option value="N">N</option>
+                        <option value="O">O</option>
+                        <option value="P">P</option>
+                        <option value="Q">Q</option>
+                        <option value="R">R</option>
+                        <option value="S">S</option>
+                        <option value="T">T</option>
+                        <option value="U">U</option>
+                        <option value="V">V</option>
+                        <option value="W">W</option>
+                        <option value="X">X</option>
+                        <option value="Y">Y</option>
+                    </select>
+
+                    <button id="capture-template-btn" class="px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700">
+                        Capture Template
+                    </button>
+
+                    <button id="clear-templates-btn" class="px-4 py-2 rounded-lg bg-gray-700 text-white hover:bg-gray-600">
+                        Clear Templates
+                    </button>
+                </div>
+
+                <div class="mt-4 bg-gray-800 rounded-xl p-4">
+                    <p class="text-gray-300">Saved templates:</p>
+                    <pre id="template-info" class="text-sm text-emerald-300 mt-2 whitespace-pre-wrap"></pre>
+                </div>
+
+                <div class="mt-4 bg-gray-800 rounded-xl p-4">
+                    <p class="text-gray-300">Notes:</p>
+                    <ul class="text-gray-400 text-sm mt-2 space-y-1">
+                        <li>• J and Z are not included here.</li>
+                        <li>• Capture 5–10 samples per letter for better results.</li>
+                        <li>• Keep the same hand and camera angle while testing.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<script>
+let username = "{{ username }}";
+
+function getInitials(name) {
+    let words = name.trim().split(" ");
+    let initials = words[0][0];
+    if (words.length > 1) {
+        initials += words[1][0];
+    }
+    return initials.toUpperCase();
+}
+
+function getColor(name) {
+    let colors = ["#FF5733", "#33FF57", "#3357FF", "#FF33A8", "#FF8C00"];
+    let index = name.length % colors.length;
+    return colors[index];
+}
+
+function generateAvatar() {
+    let canvas = document.getElementById("avatarCanvas");
+    let ctx = canvas.getContext("2d");
+
+    let initials = getInitials(username);
+
+    
+    ctx.fillStyle = getColor(username);
+    ctx.beginPath();
+    ctx.arc(20, 20, 20, 0, Math.PI * 2);
+    ctx.fill();
+
+    
+    ctx.fillStyle = "white";
+    ctx.font = "bold 18px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(initials, 20, 22);
+}
+
+generateAvatar();
+</script>
+<script type="module" src="{{ url_for('static', filename='mediapipe.js') }}"></script>
+{% endblock %}

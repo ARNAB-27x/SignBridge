@@ -1,0 +1,352 @@
+{% extends "base.html" %}
+
+{% block content %}
+<header>
+        <div id="profile" class="relative h-15 bg-linear-to-r from-[#0f172a] via-[#1e293b] to-[#0f172a] flex items-center justify-between ">
+            <div class=" pl-50 flex items-center gap-3"><img class="h-25 w-30  flex items-center" src="/static/logo.png" alt="NESTA" >
+            <div class="h-12 w-20 font-bold text-xl text-white flex items-center">NESTA</div></div>
+            <div class=" w-100 flex items-center gap-5 "><button class="p-2 rounded-full hover:bg-gray-600 text-yellow-400  transition"><svg id="theme" xmlns="http://www.w3.org/2000/svg" 
+class="h-6 w-6 text-yellow-400 cursor-pointer "
+fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+
+  <circle cx="12" cy="12" r="5"></circle>
+
+  <line x1="12" y1="1" x2="12" y2="3"></line>
+  <line x1="12" y1="21" x2="12" y2="23"></line>
+
+  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+
+  <line x1="1" y1="12" x2="3" y2="12"></line>
+  <line x1="21" y1="12" x2="23" y2="12"></line>
+
+  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+
+</svg></button>
+ <div id="isprofile" class="absolute right-10 h-10 w-10 rounded-full cursor-pointer overflow-hidden">
+    <canvas id="avatarCanvas" width="40" height="40"></canvas>
+</div>
+
+            </div>
+            
+        </div>
+    </header>
+    <main id="main" class="flex items-center justify-center bg-[url('/static/images/pexels-codioful-7130536.jpg')] bg-cover ">
+        <div></div>
+        <div></div>
+        <div></div>
+
+ <section class="max-w-7xl mx-auto px-6 py-10">
+    <div class="rounded-3xl border border-white/10 glass shadow-2xl overflow-hidden">
+      <div class="px-8 py-10 bg-gradient-to-r from-violet-700/70 via-fuchsia-700/60 to-indigo-700/70">
+        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p class="uppercase tracking-[0.3em] text-xs text-violet-100/80">SignBridge Guide</p>
+            <h1 class="text-4xl md:text-5xl font-extrabold mt-2">Sign Rules & Processing Guide</h1>
+            <p class="mt-4 text-violet-100/90 max-w-3xl text-base md:text-lg leading-7">
+              This page explains how each supported sign should be shown to the camera for clear recognition. For easier processing and more stable results, some of our signs are altered a little bit from standard hand shapes. Please follow the instructions below carefully.
+            </p>
+          </div>
+          <div class="rounded-2xl border border-white/15 bg-white/10 px-5 py-4 max-w-sm">
+            <p class="text-sm text-violet-100/90 font-semibold">Important</p>
+            <p class="text-sm text-violet-100/80 leading-6 mt-2">
+              Use a plain background, keep only one hand inside the camera frame, keep your hand steady for a moment, and stay at a medium distance from the webcam.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-8 md:p-10 space-y-10">
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="rounded-2xl border border-emerald-400/20 bg-emerald-500/10 p-6">
+            <h2 class="text-xl font-bold text-emerald-300">How it works</h2>
+            <p class="mt-3 text-slate-200 leading-7 text-sm">
+              The camera tracks your hand landmarks and compares your hand pose with the supported letter patterns. If your hand is clear and stable, the app predicts the matching letter and adds it to the word output.
+            </p>
+          </div>
+          <div class="rounded-2xl border border-sky-400/20 bg-sky-500/10 p-6">
+            <h2 class="text-xl font-bold text-sky-300">Processing note</h2>
+            <p class="mt-3 text-slate-200 leading-7 text-sm">
+              Some signs are intentionally adjusted a little for easy processing, cleaner understanding, and better consistency in front of the webcam. Follow the SignBridge version shown on this page.
+            </p>
+          </div>
+          <div class="rounded-2xl border border-amber-400/20 bg-amber-500/10 p-6">
+            <h2 class="text-xl font-bold text-amber-300">Hand direction</h2>
+            <p class="mt-3 text-slate-200 leading-7 text-sm">
+              Most shown letters should be done with the left hand. For <span class="font-bold text-white">C</span>, use the right hand as instructed. Some letters also require showing the front side or back side of the hand.
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between gap-4 flex-wrap">
+            <div>
+              <h2 class="text-3xl font-extrabold">Supported Letters</h2>
+              <p class="text-slate-300 mt-2">A, B, C, D, E, F, G, H, I, K, L, M, O, P, R, S, T, U, W, Y</p>
+            </div>
+            <div class="rounded-full bg-white/5 border border-white/10 px-4 py-2 text-sm text-slate-200">
+              Photo slots are included below.
+            </div>
+          </div>
+
+          <div class="grid grid-auto gap-6 mt-8">
+            <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-5">
+              <div class="flex items-center justify-between">
+                <h3 class="text-2xl font-bold">A</h3>
+                <span class="text-xs uppercase tracking-widest text-emerald-300">Left Hand</span>
+              </div>
+              <div class="mt-4 h-48 rounded-2xl border-2 border-dashed border-slate-600 bg-slate-800/70 flex items-center justify-center text-center text-slate-400 px-4"><img class=" h-45" src="/static/images/A.png" alt="A"></div>
+              <p class="mt-4 text-sm text-slate-300 leading-6">Make a closed fist. Keep all fingers folded and keep the thumb resting naturally outside for a clear side shape.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-5">
+              <div class="flex items-center justify-between">
+                <h3 class="text-2xl font-bold">B</h3>
+                <span class="text-xs uppercase tracking-widest text-emerald-300">Left Hand</span>
+              </div>
+              <div class="mt-4 h-48 rounded-2xl border-2 border-dashed border-slate-600 bg-slate-800/70 flex items-center justify-center text-center text-slate-400 px-4"><img class=" h-45" src="/static/images/B.png" alt="B"></div>
+              <p class="mt-4 text-sm text-slate-300 leading-6">Open all four fingers straight upward and keep the thumb folded inward for a clean flat-palm look.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-5">
+              <div class="flex items-center justify-between">
+                <h3 class="text-2xl font-bold">C</h3>
+                <span class="text-xs uppercase tracking-widest text-fuchsia-300">Right Hand</span>
+              </div>
+              <div class="mt-4 h-48 rounded-2xl border-2 border-dashed border-slate-600 bg-slate-800/70 flex items-center justify-center text-center text-slate-400 px-4"><img class=" h-45" src="/static/images/C.png" alt="C"></div>
+              <p class="mt-4 text-sm text-slate-300 leading-6">Use the right hand. Curve the fingers and thumb to form a clear “C” shape. Keep the curve wide and visible to the camera.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-5">
+              <div class="flex items-center justify-between">
+                <h3 class="text-2xl font-bold">D</h3>
+                <span class="text-xs uppercase tracking-widest text-emerald-300">Left Hand</span>
+              </div>
+              <div class="mt-4 h-48 rounded-2xl border-2 border-dashed border-slate-600 bg-slate-800/70 flex items-center justify-center text-center text-slate-400 px-4"><img class=" h-45" src="/static/images/D.png" alt="D"></div>
+              <p class="mt-4 text-sm text-slate-300 leading-6">Raise the index finger straight up and close the remaining fingers. Keep the thumb supporting the closed fingers.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-5">
+              <div class="flex items-center justify-between">
+                <h3 class="text-2xl font-bold">E</h3>
+                <span class="text-xs uppercase tracking-widest text-emerald-300">Left Hand</span>
+              </div>
+              <div class="mt-4 h-48 rounded-2xl border-2 border-dashed border-slate-600 bg-slate-800/70 flex items-center justify-center text-center text-slate-400 px-4"><img class=" h-45" src="/static/images/E.png" alt="E"></div>
+              <p class="mt-4 text-sm text-slate-300 leading-6">Bend all fingers inward slightly so the hand looks compact. Keep the shape tight and steady.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-5">
+              <div class="flex items-center justify-between">
+                <h3 class="text-2xl font-bold">F</h3>
+                <span class="text-xs uppercase tracking-widest text-emerald-300">Left Hand</span>
+              </div>
+              <div class="mt-4 h-48 rounded-2xl border-2 border-dashed border-slate-600 bg-slate-800/70 flex items-center justify-center text-center text-slate-400 px-4"><img class=" h-45" src="/static/images/F.png" alt="F"></div>
+              <p class="mt-4 text-sm text-slate-300 leading-6">Touch the thumb and index finger to make a small ring. Keep the middle, ring, and pinky fingers extended upward.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-5">
+              <div class="flex items-center justify-between">
+                <h3 class="text-2xl font-bold">G</h3>
+                <span class="text-xs uppercase tracking-widest text-emerald-300">Left Hand</span>
+              </div>
+              <div class="mt-4 h-48 rounded-2xl border-2 border-dashed border-slate-600 bg-slate-800/70 flex items-center justify-center text-center text-slate-400 px-4"><img class=" h-45" src="/static/images/G.png" alt="G"></div>
+              <p class="mt-4 text-sm text-slate-300 leading-6">Keep the index finger and thumb extended sideways with the other fingers closed for a narrow pointing shape.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-5">
+              <div class="flex items-center justify-between">
+                <h3 class="text-2xl font-bold">H</h3>
+                <span class="text-xs uppercase tracking-widest text-emerald-300">Left Hand</span>
+              </div>
+              <div class="mt-4 h-48 rounded-2xl border-2 border-dashed border-slate-600 bg-slate-800/70 flex items-center justify-center text-center text-slate-400 px-4"><img class=" h-45" src="/static/images/H.png" alt="H"></div>
+              <p class="mt-4 text-sm text-slate-300 leading-6">Extend the index and middle fingers together sideways. Close the ring and pinky fingers.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-5">
+              <div class="flex items-center justify-between">
+                <h3 class="text-2xl font-bold">I</h3>
+                <span class="text-xs uppercase tracking-widest text-emerald-300">Left Hand</span>
+              </div>
+              <div class="mt-4 h-48 rounded-2xl border-2 border-dashed border-slate-600 bg-slate-800/70 flex items-center justify-center text-center text-slate-400 px-4"><img class=" h-45" src="/static/images/I.png" alt="I"></div>
+              <p class="mt-4 text-sm text-slate-300 leading-6">Close all fingers and raise only the pinky finger upward.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-5">
+              <div class="flex items-center justify-between">
+                <h3 class="text-2xl font-bold">K</h3>
+                <span class="text-xs uppercase tracking-widest text-emerald-300">Left Hand</span>
+              </div>
+              <div class="mt-4 h-48 rounded-2xl border-2 border-dashed border-slate-600 bg-slate-800/70 flex items-center justify-center text-center text-slate-400 px-4"><img class=" h-45" src="/static/images/K.png" alt="K"></div>
+              <p class="mt-4 text-sm text-slate-300 leading-6">Open the index and middle fingers upward in a V shape and keep the thumb lifted between them for a clear K shape.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-5">
+              <div class="flex items-center justify-between">
+                <h3 class="text-2xl font-bold">L</h3>
+                <span class="text-xs uppercase tracking-widest text-emerald-300">Left Hand</span>
+              </div>
+              <div class="mt-4 h-48 rounded-2xl border-2 border-dashed border-slate-600 bg-slate-800/70 flex items-center justify-center text-center text-slate-400 px-4"><img class=" h-45" src="/static/images/L.png" alt="L"></div>
+              <p class="mt-4 text-sm text-slate-300 leading-6">Raise the index finger upward and extend the thumb sideways to form an “L”. Keep the other fingers closed.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-5">
+              <div class="flex items-center justify-between">
+                <h3 class="text-2xl font-bold">M</h3>
+                <span class="text-xs uppercase tracking-widest text-emerald-300">Left Hand</span>
+              </div>
+              <div class="mt-4 h-48 rounded-2xl border-2 border-dashed border-slate-600 bg-slate-800/70 flex items-center justify-center text-center text-slate-400 px-4"><img class=" h-45" src="/static/images/M.png" alt="M"></div>
+              <p class="mt-4 text-sm text-slate-300 leading-6">Close the hand and keep the thumb tucked under the front fingers. Keep the hand compact and clearly visible.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-5 ring-1 ring-violet-500/30">
+              <div class="flex items-center justify-between">
+                <h3 class="text-2xl font-bold">W</h3>
+                <span class="text-xs uppercase tracking-widest text-amber-300">Left Hand</span>
+              </div>
+              <div class="mt-4 h-48 rounded-2xl border-2 border-dashed border-violet-500/40 bg-slate-800/70 flex items-center justify-center text-center text-slate-400 px-4"><img class=" h-45" src="/static/images/W.png" alt="W"></div>
+              <p class="mt-4 text-sm text-slate-300 leading-6">For easier processing, close all fingers except the pinky and thumb. Keep only the pinky and thumb visible and separated clearly.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-5">
+              <div class="flex items-center justify-between">
+                <h3 class="text-2xl font-bold">O</h3>
+                <span class="text-xs uppercase tracking-widest text-emerald-300">Left Hand</span>
+              </div>
+              <div class="mt-4 h-48 rounded-2xl border-2 border-dashed border-slate-600 bg-slate-800/70 flex items-center justify-center text-center text-slate-400 px-4"><img class=" h-45" src="/static/images/O.png" alt="O"></div>
+              <p class="mt-4 text-sm text-slate-300 leading-6">Curve all fingers and thumb to make a round “O” shape. Keep the circle neat and centered in front of the camera.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-5 ring-1 ring-violet-500/30">
+              <div class="flex items-center justify-between">
+                <h3 class="text-2xl font-bold">P</h3>
+                <span class="text-xs uppercase tracking-widest text-amber-300">Custom SignBridge Rule</span>
+              </div>
+              <div class="mt-4 h-48 rounded-2xl border-2 border-dashed border-violet-500/40 bg-slate-800/70 flex items-center justify-center text-center text-slate-400 px-4"><img class=" h-45" src="/static/images/P.png" alt="P"></div>
+              <p class="mt-4 text-sm text-slate-300 leading-6">Open two fingers downward. Keep the hand rotated so the two extended fingers clearly point down for easy detection.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-5">
+              <div class="flex items-center justify-between">
+                <h3 class="text-2xl font-bold">R</h3>
+                <span class="text-xs uppercase tracking-widest text-emerald-300">Left Hand</span>
+              </div>
+              <div class="mt-4 h-48 rounded-2xl border-2 border-dashed border-slate-600 bg-slate-800/70 flex items-center justify-center text-center text-slate-400 px-4"><img class=" h-45" src="/static/images/R.png" alt="R"></div>
+              <p class="mt-4 text-sm text-slate-300 leading-6">Cross the index and middle fingers while keeping the remaining fingers closed.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-5 ring-1 ring-violet-500/30">
+              <div class="flex items-center justify-between">
+                <h3 class="text-2xl font-bold">S</h3>
+                <span class="text-xs uppercase tracking-widest text-amber-300">Custom SignBridge Rule</span>
+              </div>
+              <div class="mt-4 h-48 rounded-2xl border-2 border-dashed border-violet-500/40 bg-slate-800/70 flex items-center justify-center text-center text-slate-400 px-4"><img class=" h-45" src="/static/images/S.png" alt="S"></div>
+              <p class="mt-4 text-sm text-slate-300 leading-6">Open the thumb sideways and keep all other fingers closed. Make sure the thumb side profile is clearly visible.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-5 ring-1 ring-violet-500/30">
+              <div class="flex items-center justify-between">
+                <h3 class="text-2xl font-bold">T</h3>
+                <span class="text-xs uppercase tracking-widest text-amber-300">Left Hand</span>
+              </div>
+              <div class="mt-4 h-48 rounded-2xl border-2 border-dashed border-violet-500/40 bg-slate-800/70 flex items-center justify-center text-center text-slate-400 px-4"><img class=" h-45" src="/static/images/T.png" alt="T"></div>
+              <p class="mt-4 text-sm text-slate-300 leading-6">Form a fist and place your thumb between the index and middle finger, with the front of the hand facing outward.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-5 ring-1 ring-violet-500/30">
+              <div class="flex items-center justify-between">
+                <h3 class="text-2xl font-bold">U</h3>
+                <span class="text-xs uppercase tracking-widest text-amber-300">Custom SignBridge Rule</span>
+              </div>
+              <div class="mt-4 h-48 rounded-2xl border-2 border-dashed border-violet-500/40 bg-slate-800/70 flex items-center justify-center text-center text-slate-400 px-4"><img class=" h-45" src="/static/images/U.png" alt="U"></div>
+              <p class="mt-4 text-sm text-slate-300 leading-6">Open the index finger, middle finger, and thumb. Show the front side of the hand clearly to the camera.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-5">
+              <div class="flex items-center justify-between">
+                <h3 class="text-2xl font-bold">Y</h3>
+                <span class="text-xs uppercase tracking-widest text-emerald-300">Left Hand</span>
+              </div>
+              <div class="mt-4 h-48 rounded-2xl border-2 border-dashed border-slate-600 bg-slate-800/70 flex items-center justify-center text-center text-slate-400 px-4"><img class=" h-45" src="/static/images/Y.png" alt="Y"></div>
+              <p class="mt-4 text-sm text-slate-300 leading-6">Open the thumb and pinky while keeping the index, middle, and ring fingers closed.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-3xl border border-rose-400/20 bg-rose-500/10 p-8">
+          <h2 class="text-3xl font-extrabold text-rose-300">Letters Under Process</h2>
+          <p class="mt-4 text-slate-200 leading-7 max-w-4xl">
+            The following letters are currently under process and are not yet supported in this version:
+            <span class="font-bold text-white">J, Q, V, N, X, Z</span> and any other letters not listed in the supported section above. These are under active improvement for better accuracy, motion handling, and camera stability.
+          </p>
+        </div>
+
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-8">
+          <h2 class="text-3xl font-extrabold">Best Practices for Users</h2>
+          <div class="grid md:grid-cols-2 gap-6 mt-6 text-slate-200">
+            <div class="rounded-2xl bg-slate-900/60 p-6 border border-white/10">
+              <h3 class="font-bold text-xl text-sky-300">For better recognition</h3>
+              <ul class="mt-4 space-y-2 text-sm leading-6 text-slate-300 list-disc list-inside">
+                <li>Keep your hand inside the center area of the webcam.</li>
+                <li>Do one sign at a time and hold it steady for a moment.</li>
+                <li>Use proper lighting and avoid dark backgrounds.</li>
+                <li>Do not move too fast while signing.</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl bg-slate-900/60 p-6 border border-white/10">
+              <h3 class="font-bold text-xl text-fuchsia-300">Important project note</h3>
+              <p class="mt-4 text-sm leading-6 text-slate-300">
+                SignBridge is built for clear recognition and user-friendly interaction. For that reason, some signs are adjusted slightly from standard forms so the system can process them more clearly and users can understand the required pose more easily.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+        
+<script>
+let username = "{{ username }}";
+
+function getInitials(name) {
+    let words = name.trim().split(" ");
+    let initials = words[0][0];
+    if (words.length > 1) {
+        initials += words[1][0];
+    }
+    return initials.toUpperCase();
+}
+
+function getColor(name) {
+    let colors = ["#FF5733", "#33FF57", "#3357FF", "#FF33A8", "#FF8C00"];
+    let index = name.length % colors.length;
+    return colors[index];
+}
+
+function generateAvatar() {
+    let canvas = document.getElementById("avatarCanvas");
+    let ctx = canvas.getContext("2d");
+
+    let initials = getInitials(username);
+
+    
+    ctx.fillStyle = getColor(username);
+    ctx.beginPath();
+    ctx.arc(20, 20, 20, 0, Math.PI * 2);
+    ctx.fill();
+
+    
+    ctx.fillStyle = "white";
+    ctx.font = "bold 18px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(initials, 20, 22);
+}
+
+generateAvatar();
+</script>
+{% endblock %}
